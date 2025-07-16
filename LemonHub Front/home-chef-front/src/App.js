@@ -13,11 +13,9 @@ function App() {
   const [editando, setEditando] = useState(false);
   const [editandoId, setEditandoId] = useState(null);
 
-  // Estados para filtros de busca
   const [filtroNome, setFiltroNome] = useState('');
   const [filtroCategoria, setFiltroCategoria] = useState('');
 
-  // Função para buscar pratos (com ou sem filtros)
   const buscarPratos = () => {
     let url = 'http://localhost:3000/pratos/search?';
     if (filtroNome) url += `nome=${encodeURIComponent(filtroNome)}&`;
@@ -29,12 +27,10 @@ function App() {
       .catch(error => console.error('Erro ao buscar pratos:', error));
   };
 
-  // Buscar pratos ao montar componente, sem filtros inicialmente
   useEffect(() => {
     buscarPratos();
   }, []);
 
-  // Lidar com mudanças no form de cadastro/edição
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -42,7 +38,6 @@ function App() {
     });
   };
 
-  // Submeter novo prato ou atualizar existente
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -85,7 +80,6 @@ function App() {
     }
   };
 
-  // Deletar prato
   const handleDelete = (id) => {
     fetch(`http://localhost:3000/pratos/${id}`, {
       method: 'DELETE'
@@ -96,7 +90,6 @@ function App() {
       .catch(error => console.error('Erro ao deletar prato:', error));
   };
 
-  // Começar a editar um prato
   const handleEditClick = (prato) => {
     setFormData({
       nome: prato.nome || '',
@@ -112,67 +105,71 @@ function App() {
     <div className="App">
       <h1 className='title'>Cardápio Lemon<span className='hub'>Hub</span></h1>
 
-      <h2>{editando ? 'Editar Prato' : 'Adicionar Prato'}</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="nome"
-          placeholder="Nome"
-          value={formData.nome}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="descricao"
-          placeholder="Descrição"
-          value={formData.descricao}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          step="0.01"
-          name="preco"
-          placeholder="Preço"
-          value={formData.preco === '' ? '' : Number(formData.preco)}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="categoria"
-          placeholder="Categoria"
-          value={formData.categoria}
-          onChange={handleChange}
-          required
-        />
-        <button className='button' type="submit">{editando ? 'Atualizar' : 'Cadastrar'}</button>
-      </form>
+      <div className="forms-container">
+        <div className="form-cadastro">
+          <h2>{editando ? 'Editar Prato' : 'Adicionar Prato'}</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="nome"
+              placeholder="Nome"
+              value={formData.nome}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="descricao"
+              placeholder="Descrição"
+              value={formData.descricao}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              step="0.01"
+              name="preco"
+              placeholder="Preço"
+              value={formData.preco === '' ? '' : Number(formData.preco)}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="categoria"
+              placeholder="Categoria"
+              value={formData.categoria}
+              onChange={handleChange}
+              required
+            />
+            <button className='button' type="submit">{editando ? 'Atualizar' : 'Cadastrar'}</button>
+          </form>
+        </div>
 
-         {/* Formulário de busca */}
-      <h2>Buscar Pratos</h2>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          buscarPratos();
-        }}
-        className="form-busca"
-      >
-        <input
-          type="text"
-          placeholder="Buscar por nome"
-          value={filtroNome}
-          onChange={e => setFiltroNome(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Buscar por categoria"
-          value={filtroCategoria}
-          onChange={e => setFiltroCategoria(e.target.value)}
-        />
-        <button type="submit" className="button">Buscar</button>
-      </form>
+        <div className="form-busca">
+          <h2>Buscar Pratos</h2>
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              buscarPratos();
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Buscar por nome"
+              value={filtroNome}
+              onChange={e => setFiltroNome(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Buscar por categoria"
+              value={filtroCategoria}
+              onChange={e => setFiltroCategoria(e.target.value)}
+            />
+            <button type="submit" className="button">Buscar</button>
+          </form>
+        </div>
+      </div>
 
       <h2>Pratos</h2>
       <ul>
