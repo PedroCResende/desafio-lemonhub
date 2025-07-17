@@ -6,20 +6,33 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  RefreshControl
+  RefreshControl,
+  ActivityIndicator
 } from 'react-native';
 import { pratosService, authService } from '../services/api';
 
-export default function PratosListScreen({ navigation, setIsAuthenticated }) {
+export default function PratosListScreen({ navigation, route, setIsAuthenticated }) {
   const [pratos, setPratos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
-    carregarPratos();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      carregarPratos();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    if (route.params?.refresh) {
+      carregarPratos();
+      navigation.setParams({ refresh: false }); // Resetar o parâmetro para evitar recargas desnecessárias
+    }
+  }, [route.params?.refresh]);
 
   const carregarPratos = async () => {
+    setRefreshing(true);
     try {
       const data = await pratosService.listar();
       setPratos(data);
@@ -56,15 +69,12 @@ export default function PratosListScreen({ navigation, setIsAuthenticated }) {
     >
       <View style={styles.pratoInfo}>
         <Text style={styles.pratoNome}>{item.nome}</Text>
-        <Text style={styles.pratoDescricao} numberOfLines={2}>
-          {item.descricao}
-        </Text>
         <Text style={styles.pratoPreco}>R$ {item.preco?.toFixed(2)}</Text>
         <Text style={styles.pratoCategoria}>{item.categoria}</Text>
         {item.disponivel !== undefined && (
           <Text style={[
             styles.pratoDisponivel,
-            { color: item.disponivel ? '#4CAF50' : '#F44336' }
+            { color: item.disponivel ? '#8BC34A' : '#F44336' } // Verde para disponível, Vermelho para indisponível
           ]}>
             {item.disponivel ? 'Disponível' : 'Indisponível'}
           </Text>
@@ -75,6 +85,10 @@ export default function PratosListScreen({ navigation, setIsAuthenticated }) {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
+      headerStyle: {
+        backgroundColor: '#212121', // Fundo escuro para o cabeçalho
+      },
+      headerTintColor: '#FDD835', // Cor do texto e ícones do cabeçalho
       headerRight: () => (
         <View style={styles.headerButtons}>
           <TouchableOpacity
@@ -97,7 +111,8 @@ export default function PratosListScreen({ navigation, setIsAuthenticated }) {
   if (loading) {
     return (
       <View style={styles.centerContainer}>
-        <Text>Carregando...</Text>
+        <ActivityIndicator size="large" color="#FDD835" />
+        <Text style={styles.loadingText}>Carregando pratos...</Text>
       </View>
     );
   }
@@ -109,11 +124,11 @@ export default function PratosListScreen({ navigation, setIsAuthenticated }) {
         renderItem={renderPrato}
         keyExtractor={(item) => item.id.toString()}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={carregarPratos} />
+          <RefreshControl refreshing={refreshing} onRefresh={carregarPratos} tintColor="#FDD835" />
         }
         ListEmptyComponent={
           <View style={styles.centerContainer}>
-            <Text>Nenhum prato encontrado</Text>
+            <Text style={styles.emptyListText}>Nenhum prato encontrado</Text>
           </View>
         }
       />
@@ -124,12 +139,22 @@ export default function PratosListScreen({ navigation, setIsAuthenticated }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#212121', // Fundo escuro
   },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#212121',
+  },
+  loadingText: {
+    color: '#FDD835',
+    marginTop: 10,
+    fontSize: 16,
+  },
+  emptyListText: {
+    color: '#FFFFFF',
+    fontSize: 16,
   },
   headerButtons: {
     flexDirection: 'row',
@@ -140,11 +165,12 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   headerButtonText: {
-    color: '#667eea',
+    color: '#FDD835', // Amarelo Limão para texto do cabeçalho
     fontWeight: 'bold',
+    fontSize: 18,
   },
   pratoItem: {
-    backgroundColor: '#fff',
+    backgroundColor: '#3A3A39', // Fundo branco para os itens da lista
     margin: 10,
     padding: 15,
     borderRadius: 8,
@@ -161,22 +187,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
-  },
-  pratoDescricao: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 5,
+    color: '#FDD835', // Texto escuro
   },
   pratoPreco: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#4CAF50',
+    color: '#8BC34A', // Verde Folha para preço
     marginBottom: 5,
   },
   pratoCategoria: {
     fontSize: 12,
-    color: '#999',
-    backgroundColor: '#f0f0f0',
+    color: '#FDD835', // Cinza para categoria
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 4,

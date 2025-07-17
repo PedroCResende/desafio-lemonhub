@@ -6,10 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  Image // Importar o componente Image
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { authService } from '../services/api';
+
+import Logo from '../../assets/logo-lemon.png'; // Importar a logo
 
 export default function LoginScreen({ setIsAuthenticated }) {
   const [username, setUsername] = useState('');
@@ -43,12 +46,13 @@ export default function LoginScreen({ setIsAuthenticated }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>LemonHub</Text>
+      <Image source={Logo} style={styles.logo} />
       <Text style={styles.subtitle}>Faça login para continuar</Text>
 
       <TextInput
         style={styles.input}
         placeholder="Username"
+        placeholderTextColor="#999"
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
@@ -57,6 +61,7 @@ export default function LoginScreen({ setIsAuthenticated }) {
       <TextInput
         style={styles.input}
         placeholder="Password"
+        placeholderTextColor="#999"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -68,7 +73,7 @@ export default function LoginScreen({ setIsAuthenticated }) {
         disabled={loading}
       >
         {loading ? (
-          <ActivityIndicator color="#fff" />
+          <ActivityIndicator color="#212121" />
         ) : (
           <Text style={styles.buttonText}>Entrar</Text>
         )}
@@ -85,46 +90,49 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#212121', // Cinza Escuro/Fundo
   },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-    color: '#333',
+  logo: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+    marginBottom: 30,
   },
   subtitle: {
     fontSize: 16,
     textAlign: 'center',
     marginBottom: 30,
-    color: '#666',
+    color: '#FFFFFF', // Branco
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF', // Branco
     padding: 15,
     borderRadius: 8,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#FDD835', // Amarelo Limão para borda
+    width: '100%',
+    color: '#212121', // Texto escuro no input
   },
   button: {
-    backgroundColor: '#667eea',
+    backgroundColor: '#FDD835', // Amarelo Limão
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 10,
+    width: '100%',
   },
   buttonText: {
-    color: '#fff',
+    color: '#212121', // Cinza Escuro/Fundo
     fontSize: 16,
     fontWeight: 'bold',
   },
   hint: {
     textAlign: 'center',
     marginTop: 20,
-    color: '#999',
+    color: '#999', // Manter um cinza para o hint
     fontSize: 14,
   },
 });

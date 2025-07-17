@@ -9,9 +9,9 @@ db.serialize(() => {
       nome TEXT,
       descricao TEXT,
       preco REAL,
-      categoria TEXT
-    )
-  `);
+      categoria TEXT,
+      disponivel INTEGER DEFAULT 1
+    )`);
 });
 
 module.exports = db;

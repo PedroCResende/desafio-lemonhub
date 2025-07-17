@@ -19,7 +19,7 @@ export default function PratoFormScreen({ navigation, route }) {
   const [descricao, setDescricao] = useState(prato?.descricao || '');
   const [preco, setPreco] = useState(prato?.preco?.toString() || '');
   const [categoria, setCategoria] = useState(prato?.categoria || '');
-  const [disponivel, setDisponivel] = useState(prato?.disponivel ?? true);
+  const [disponivel, setDisponivel] = useState(prato?.disponivel === 1 || prato?.disponivel === 0 ? prato.disponivel === 1 : true);
   const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
@@ -44,14 +44,14 @@ export default function PratoFormScreen({ navigation, route }) {
       };
 
       if (isEditing) {
-        await pratosService.atualizar(prato.id, pratoData);
-        Alert.alert('Sucesso', 'Prato atualizado com sucesso!');
+        const updatedPrato = await pratosService.atualizar(prato.id, pratoData);
+        Alert.alert("Sucesso", "Prato atualizado com sucesso!");
+        navigation.navigate("PratoDetail", { prato: { ...prato, ...pratoData } }); // Passa o prato atualizado de volta
       } else {
-        await pratosService.criar(pratoData);
-        Alert.alert('Sucesso', 'Prato criado com sucesso!');
+        const newPrato = await pratosService.criar(pratoData);
+        Alert.alert("Sucesso", "Prato criado com sucesso!");
+        navigation.navigate("PratoDetail", { prato: newPrato }); // Passa o novo prato para a tela de detalhes
       }
-
-      navigation.goBack();
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível salvar o prato');
     } finally {
@@ -122,9 +122,9 @@ export default function PratoFormScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#212121', // Fundo escuro
   },
   form: {
     padding: 20,
@@ -133,15 +133,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
-    color: '#333',
+    color: '#FFFFFF', // Branco para labels
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF', // Branco
     padding: 15,
     borderRadius: 8,
     marginBottom: 15,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#FDD835', // Amarelo Limão para borda
+    color: '#212121', // Texto escuro no input
   },
   textArea: {
     height: 80,
@@ -154,14 +155,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#667eea',
+    backgroundColor: '#FDD835', // Amarelo Limão
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: '#212121', // Cinza Escuro/Fundo
     fontSize: 16,
     fontWeight: 'bold',
   },

@@ -10,7 +10,13 @@ import {
 import { pratosService } from '../services/api';
 
 export default function PratoDetailScreen({ route, navigation }) {
-  const { prato } = route.params;
+  const [prato, setPrato] = React.useState(route.params?.prato);
+
+  React.useEffect(() => {
+    if (route.params?.prato) {
+      setPrato(route.params.prato);
+    }
+  }, [route.params?.prato]);
 
   const handleDelete = () => {
     Alert.alert(
@@ -25,6 +31,7 @@ export default function PratoDetailScreen({ route, navigation }) {
               await pratosService.deletar(prato.id);
               Alert.alert('Sucesso', 'Prato excluído com sucesso!');
               navigation.goBack(); // Volta para a lista após exclusão
+              navigation.navigate('PratosList', { refresh: true }); // Sinaliza para PratosListScreen recarregar
             } catch (error) {
               Alert.alert('Erro', 'Não foi possível excluir o prato.');
             }
@@ -76,13 +83,13 @@ export default function PratoDetailScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#212121', // Fundo escuro
     padding: 10,
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#3A3A39', // Fundo branco para o card
     borderRadius: 8,
     padding: 20,
     marginVertical: 10,
@@ -96,22 +103,22 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#333',
+    color: '#FDD835', // Texto escuro
   },
   descricao: {
     fontSize: 16,
-    color: '#666',
+    color: '#b89f34ff', // Cinza para descrição
     marginBottom: 10,
   },
   preco: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#4CAF50',
+    color: '#8BC34A', // Verde Folha para preço
     marginBottom: 10,
   },
   categoria: {
     fontSize: 14,
-    color: '#999',
+    color: '#b89f34ff', // Cinza para categoria
     marginBottom: 10,
   },
   disponivel: {
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   headerButtonText: {
-    color: '#667eea',
+    color: '#FDD835', // Amarelo Limão para texto do cabeçalho
     fontWeight: 'bold',
   },
 });
