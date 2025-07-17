@@ -1,70 +1,334 @@
-# Getting Started with Create React App
+🍽️ LemonHub Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Interface React para o sistema de cardápio com autenticação JWT
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+📌 Tecnologias utilizadas
 
-### `npm test`
+•
+React
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+•
+React Icons
 
-### `npm run build`
+•
+CSS3
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+•
+JavaScript ES6+
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+🚀 Como rodar
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1.
+Certifique-se de que o backend está rodando em http://localhost:3000
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2.
+Instale as dependências:
 
-## Learn More
+3.
+Inicie o servidor de desenvolvimento:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+O frontend estará disponível em http://localhost:3001
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+🔐 Sistema de Autenticação
 
-### Making a Progressive Web App
+Credenciais Padrão
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+•
+Username: admin
 
-### Advanced Configuration
+•
+Password: admin123
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Funcionalidades de Autenticação
 
-### Deployment
+•
+Login: Interface responsiva com validação
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+•
+Logout: Limpeza de dados e redirecionamento
 
-### `npm run build` fails to minify
+•
+Persistência: Token armazenado no localStorage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+•
+Proteção: Operações CRUD requerem autenticação
+
+
+
+
+
+🎨 Componentes
+
+App.js
+
+•
+Componente principal da aplicação
+
+•
+Gerencia estado de autenticação
+
+•
+Controla exibição de login vs interface principal
+
+•
+Implementa requisições autenticadas
+
+Login.js
+
+•
+Interface de login responsiva
+
+•
+Validação de formulário
+
+•
+Tratamento de erros
+
+•
+Comunicação com API de autenticação
+
+Header.js
+
+•
+Cabeçalho da aplicação
+
+•
+Exibe informações do usuário logado
+
+•
+Botão de logout
+
+•
+Design responsivo
+
+
+
+
+
+🔧 Funcionalidades
+
+Públicas (sem autenticação)
+
+•
+Visualizar lista de pratos
+
+•
+Buscar pratos por nome ou categoria
+
+Protegidas (requer autenticação)
+
+•
+Adicionar novo prato
+
+•
+Editar prato existente
+
+•
+Deletar prato
+
+
+
+
+
+🎯 Fluxo de Uso
+
+1.
+Acesso Inicial: Usuário acessa a aplicação
+
+2.
+Verificação: Sistema verifica se há token válido no localStorage
+
+3.
+Login: Se não autenticado, exibe tela de login
+
+4.
+Autenticação: Usuário insere credenciais e faz login
+
+5.
+Interface Principal: Após login, acessa funcionalidades completas
+
+6.
+Operações: Pode realizar todas as operações CRUD
+
+7.
+Logout: Pode sair e retornar à tela de login
+
+
+
+
+
+🔒 Segurança Frontend
+
+Medidas Implementadas
+
+•
+Validação de Token: Verificação automática na inicialização
+
+•
+Headers Autenticados: Token incluído automaticamente nas requisições
+
+•
+Proteção de UI: Botões/formulários desabilitados sem autenticação
+
+•
+Limpeza de Dados: Logout remove todas as informações sensíveis
+
+Tratamento de Erros
+
+•
+Token Expirado: Redirecionamento automático para login
+
+•
+Erro de Rede: Mensagens informativas para o usuário
+
+•
+Credenciais Inválidas: Feedback claro na tela de login
+
+
+
+
+
+📱 Design Responsivo
+
+A interface foi desenvolvida para funcionar em:
+
+•
+Desktop: Layout completo com duas colunas
+
+•
+Tablet: Adaptação automática dos formulários
+
+•
+Mobile: Layout empilhado e otimizado para toque
+
+
+
+
+
+🎨 Estilo Visual
+
+Paleta de Cores
+
+•
+Primária: Gradiente roxo/azul (#667eea → #764ba2)
+
+•
+Secundária: Dourado (#ffd700) para destaques
+
+•
+Fundo: Cinza claro (#f8f9fa)
+
+•
+Texto: Cinza escuro (#333)
+
+Componentes Visuais
+
+•
+Botões: Gradientes com efeitos hover
+
+•
+Formulários: Bordas coloridas e transições suaves
+
+•
+Cards: Sombras sutis e bordas arredondadas
+
+•
+Header: Gradiente com informações do usuário
+
+
+
+
+
+🔧 Estrutura de Arquivos
+
+Plain Text
+
+
+src/
+├── App.js              # Componente principal
+├── App.css             # Estilos principais
+├── components/
+│   ├── Login.js        # Componente de login
+│   ├── Login.css       # Estilos do login
+│   ├── Header.js       # Cabeçalho da aplicação
+│   └── Header.css      # Estilos do cabeçalho
+├── index.js            # Ponto de entrada
+└── index.css           # Estilos globais
+
+
+
+
+
+
+🚨 Troubleshooting
+
+Problemas Comuns
+
+Erro de CORS
+
+•
+Verifique se o backend está rodando
+
+•
+Backend configurado para aceitar requisições do frontend
+
+Tela branca após login
+
+•
+Verifique o console do navegador
+
+•
+Confirme se o backend está respondendo
+
+Botões não funcionam
+
+•
+Verifique se está logado
+
+•
+Token pode ter expirado (faça login novamente)
+
+Estilos não carregam
+
+•
+Limpe o cache do navegador
+
+•
+Verifique se todos os arquivos CSS estão presentes
+
+
+
+
+
+📈 Próximas Melhorias
+
+•
+Implementar loading states
+
+•
+Adicionar notificações toast
+
+•
+Melhorar acessibilidade (ARIA labels)
+
+•
+Implementar temas claro/escuro
+
+•
+Adicionar paginação para lista de pratos
+
+•
+Implementar upload de imagens para pratos
+
