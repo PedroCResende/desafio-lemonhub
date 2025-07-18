@@ -1,0 +1,139 @@
+Desafio LemonHub
+
+Este repositório contém duas aplicações interligadas: um backend (API) desenvolvido com Node.js e um aplicativo mobile construído com React Native e Expo. Para que o aplicativo funcione corretamente, é necessário que o backend esteja em execução.
+
+🚀 Como Rodar o Projeto Completo
+
+Siga os passos abaixo para configurar e executar tanto o backend quanto o aplicativo mobile.
+
+Pré-requisitos
+
+Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
+
+•
+Node.js (versão 14 ou superior recomendada)
+
+•
+npm (gerenciador de pacotes do Node.js, geralmente vem com o Node.js)
+
+•
+Git (para clonar o repositório)
+
+•
+Expo Go App (no seu dispositivo móvel, para testar o app mobile) ou um emulador/simulador Android/iOS configurado.
+
+Passo a Passo Detalhado
+
+1. Clonar o Repositório
+
+Primeiro, clone o repositório para sua máquina local usando o Git:
+
+Bash
+
+
+git clone https://github.com/PedroCResende/desafio-lemonhub
+cd desafio-lemonhub
+
+
+2. Configurar e Iniciar o Backend (API)
+
+O backend é responsável por fornecer os dados para o aplicativo mobile.
+
+1.
+Navegue até o diretório do backend:
+cd .\LemonHub-BackEnd\
+
+2.
+Instale as dependências do backend:
+npm install
+
+3.
+Inicie o servidor do backend:
+npm run dev
+
+•
+Modo de Desenvolvimento (recomendado, com Nodemon):
+
+
+
+
+
+3. Configurar e Iniciar o Aplicativo Mobile
+
+O aplicativo mobile se conecta ao backend para buscar e enviar dados.
+
+1.
+Abra uma nova janela do terminal (mantenha o terminal do backend aberto).
+
+2.
+Navegue até o diretório do aplicativo mobile:
+cd .\LemonHub-Mobile\
+
+3.
+Instale as dependências do aplicativo mobile:
+npm install
+
+4.
+Ajuste a URL da API (MUITO IMPORTANTE!):
+
+•
+Localize o arquivo: LemonHub-Mobile/src/services/api.js
+
+•
+Edite a linha: baseURL: 'http://localhost:3000',
+
+•
+Substitua localhost pelo seu IP local. Por exemplo, se o seu IP for 192.168.1.100:
+
+•
+Windows: Abra o Prompt de Comando e digite ipconfig. Procure por "Endereço IPv4".
+
+•
+macOS/Linux: Abra o Terminal e digite ifconfig ou ip a. Procure pelo endereço IP associado à sua interface de rede (geralmente en0, eth0 ou wlan0).
+
+
+
+5.
+Inicie o aplicativo Expo:
+npx expo start
+
+•
+Rodar em Emulador/Simulador (requer que você tenha um emulador Android Studio ou Xcode Simulator configurado e rodando).: Pressione a tecla correspondente ao seu emulador
+
+
+Estrutura do Projeto
+
+•
+LemonHub-BackEnd/: Contém o código-fonte da API Node.js.
+
+•
+src/app.js: Ponto de entrada da aplicação.
+
+•
+src/controllers/: Lógica de negócio.
+
+•
+src/database/: Configuração do banco de dados SQLite.
+
+•
+src/middleware/: Middlewares de autenticação.
+
+•
+src/routes/: Definição das rotas da API.
+
+
+
+•
+LemonHub-Mobile/: Contém o código-fonte do aplicativo React Native.
+
+•
+App.js: Componente principal do aplicativo.
+
+•
+src/screens/: Telas da aplicação (Login, Lista de Pratos, etc.).
+
+•
+src/services/api.js: Configuração da conexão com a API.
+
+
+
