@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_BASE_URL = 'http://10.0.2.2:3000'; // Substitua o IP pelo SEU endereço de IP local
+const API_BASE_URL = 'http://10.0.2.2:3000'; // Substitua o IP pelo SEU endereço de IP local /exemplo: 'http://SEU_ENDEREÇO_IP:3000' (Trocar a porta caso não esteja rodando na :3000)
 
 
 const api = axios.create({

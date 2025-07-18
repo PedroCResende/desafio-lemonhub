@@ -1,12 +1,14 @@
-Desafio LemonHub
+🍋 Desafio LemonHub
 
-Este repositório contém duas aplicações interligadas: um backend (API) desenvolvido com Node.js e um aplicativo mobile construído com React Native e Expo. Para que o aplicativo funcione corretamente, é necessário que o backend esteja em execução.
+Este repositório contém **duas aplicações integradas**:
+- **Backend (API)** — Node.js  
+- **Aplicativo Mobile** — React Native + Expo
 
 🚀 Como Rodar o Projeto Completo
 
 Siga os passos abaixo para configurar e executar tanto o backend quanto o aplicativo mobile.
 
-Pré-requisitos
+✅ Pré-requisitos
 
 Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
 
@@ -20,11 +22,11 @@ npm (gerenciador de pacotes do Node.js, geralmente vem com o Node.js)
 Git (para clonar o repositório)
 
 •
-Expo Go App (no seu dispositivo móvel, para testar o app mobile) ou um emulador/simulador Android/iOS configurado.
+Um emulador/simulador Android/iOS configurado. (Recomendo o uso do Android Studio)
 
 Passo a Passo Detalhado
 
-1. Clonar o Repositório
+ 📂 1️⃣ Clonar o Repositório
 
 Primeiro, clone o repositório para sua máquina local usando o Git:
 
@@ -35,7 +37,7 @@ git clone https://github.com/PedroCResende/desafio-lemonhub
 cd desafio-lemonhub
 
 
-2. Configurar e Iniciar o Backend (API)
+⚙️ 2️⃣ Configurar e Rodar o Backend (API)
 
 O backend é responsável por fornecer os dados para o aplicativo mobile.
 
@@ -45,7 +47,9 @@ cd .\LemonHub-BackEnd\
 
 2.
 Instale as dependências do backend:
-npm install
+npm install 
+npm install jsonwebtoken
+npm install bcryptjs
 
 3.
 Inicie o servidor do backend:
@@ -58,7 +62,7 @@ Modo de Desenvolvimento (recomendado, com Nodemon):
 
 
 
-3. Configurar e Iniciar o Aplicativo Mobile
+📱 3️⃣ Configurar e Rodar o App Mobile (Recomendo o uso do VScode)
 
 O aplicativo mobile se conecta ao backend para buscar e enviar dados.
 
@@ -71,7 +75,7 @@ cd .\LemonHub-Mobile\
 
 3.
 Instale as dependências do aplicativo mobile:
-npm install
+npm install (caso solicite, use npm audit fix para corrigir a instalação)
 
 4.
 Ajuste a URL da API (MUITO IMPORTANTE!):
@@ -80,7 +84,7 @@ Ajuste a URL da API (MUITO IMPORTANTE!):
 Localize o arquivo: LemonHub-Mobile/src/services/api.js
 
 •
-Edite a linha: baseURL: 'http://localhost:3000',
+Edite a linha: baseURL: 'http://localhost:3000', 
 
 •
 Substitua localhost pelo seu IP local. Por exemplo, se o seu IP for 192.168.1.100:
@@ -94,46 +98,276 @@ macOS/Linux: Abra o Terminal e digite ifconfig ou ip a. Procure pelo endereço I
 
 
 5.
-Inicie o aplicativo Expo:
+Inicie o aplicativo Expo no terminal dentro da pasta LemonHub-Mobile
 npx expo start
 
 •
 Rodar em Emulador/Simulador (requer que você tenha um emulador Android Studio ou Xcode Simulator configurado e rodando).: Pressione a tecla correspondente ao seu emulador
+(Tutorial de como rodar o Android Studio no fim deste arquivo) -**ESTA ETAPA PODE DEMORAR UM POUCO**-
+
 
 
 Estrutura do Projeto
 
 •
-LemonHub-BackEnd/: Contém o código-fonte da API Node.js.
+📦 LemonHub-BackEnd/
+ ┣ 📜 src/app.js           # Ponto de entrada da API
+ ┣ 📂 src/controllers/     # Lógica de negócio
+ ┣ 📂 src/database/        # Configuração SQLite
+ ┣ 📂 src/middleware/      # Middlewares de autenticação
+ ┗ 📂 src/routes/          # Rotas da API
+
+📦 LemonHub-Mobile/
+ ┣ 📜 App.js               # Componente principal
+ ┣ 📂 src/screens/         # Telas (Login, Lista de Pratos, etc.)
+ ┗ 📂 src/services/api.js  # Configuração da conexão com a API
+
+
+💡 Dicas
+Sempre inicie o backend primeiro, DEPOIS o app mobile.
+
+Para testar em dispositivos reais, backend e celular precisam estar na mesma rede Wi-Fi.
+
+Use Ctrl + C para parar o servidor ou o Expo.
+
+
+
+💡Como iniciar o emulador pelo Android Studio
+
+-Clique em "More Actions"
+-Virual Device Manager
+-Clique no ícone de "Play" para iniciar o emulador"
+-Aguarde até que esteja iniciado (pode demorar um pouco)
+
+
+
+🍋 Guia de Teste da API LemonHub com Postman
+
+Este guia detalha como testar todas as funcionalidades da API LemonHub utilizando o Postman. Certifique-se de que o backend da API esteja rodando localmente na porta 3000 (http://localhost:3000).
+
+🚀 Configuração Inicial no Postman
+
+1.
+Baixe e instale o Postman: Se você ainda não tem, baixe-o em https://www.postman.com/downloads/.
+
+2.
+Inicie o Backend: Certifique-se de que o servidor do backend LemonHub esteja rodando. Navegue até a pasta LemonHub-BackEnd no seu terminal e execute:
+
+🔑 Autenticação (Login)
+
+As rotas de criação, atualização e exclusão de pratos são protegidas e exigem um token de autenticação. Você precisará realizar o login primeiro para obter este token.
+
+POST /auth/login
 
 •
-src/app.js: Ponto de entrada da aplicação.
+Descrição: Realiza o login de um usuário e retorna um token JWT.
 
 •
-src/controllers/: Lógica de negócio.
+Método: POST
 
 •
-src/database/: Configuração do banco de dados SQLite.
+URL: http://localhost:3000/auth/login
 
 •
-src/middleware/: Middlewares de autenticação.
+Headers:
 
 •
-src/routes/: Definição das rotas da API.
+Content-Type: application/json
 
 
 
 •
-LemonHub-Mobile/: Contém o código-fonte do aplicativo React Native.
+Body (raw - JSON):
 
 •
-App.js: Componente principal do aplicativo.
+Resposta Esperada (Status 200 OK):
+
+🍔 Rotas de Pratos (CRUD)
+
+1. Listar Todos os Pratos
+
+GET /pratos
 
 •
-src/screens/: Telas da aplicação (Login, Lista de Pratos, etc.).
+Descrição: Retorna uma lista de todos os pratos cadastrados.
 
 •
-src/services/api.js: Configuração da conexão com a API.
+Método: GET
+
+•
+URL: http://localhost:3000/pratos
+
+•
+Headers: Nenhum necessário.
+
+•
+Resposta Esperada (Status 200 OK):
+
+•
+Se não houver pratos, retornará um array vazio: [].
 
 
+
+2. Cadastrar Novo Prato
+
+POST /pratos
+
+•
+Descrição: Cadastra um novo prato no sistema.
+
+•
+Método: POST
+
+•
+URL: http://localhost:3000/pratos
+
+•
+Headers:
+
+•
+Content-Type: application/json
+
+•
+Authorization: Bearer <SEU_TOKEN_JWT> (Substitua <SEU_TOKEN_JWT> pelo token obtido no login)
+
+
+
+•
+Body (raw - JSON):
+
+•
+Resposta Esperada (Status 201 Created):
+
+•
+Validação: Tente enviar sem nome ou com preco menor ou igual a zero para ver as mensagens de erro.
+
+
+
+3. Consultar Prato por ID
+
+GET /pratos/:id
+
+•
+Descrição: Retorna os detalhes de um prato específico pelo seu ID.
+
+•
+Método: GET
+
+•
+URL: http://localhost:3000/pratos/1 (Substitua 1 pelo ID de um prato existente)
+
+•
+Headers: Nenhum necessário.
+
+•
+Resposta Esperada (Status 200 OK):
+
+•
+Prato Não Encontrado (Status 404 Not Found):
+
+
+
+4. Atualizar Prato
+
+PUT /pratos/:id
+
+•
+Descrição: Atualiza os dados de um prato existente pelo seu ID.
+
+•
+Método: PUT
+
+•
+URL: http://localhost:3000/pratos/1 (Substitua 1 pelo ID do prato a ser atualizado)
+
+•
+Headers:
+
+•
+Content-Type: application/json
+
+•
+Authorization: Bearer <SEU_TOKEN_JWT>
+
+
+
+•
+Body (raw - JSON):
+
+•
+Resposta Esperada (Status 200 OK):
+
+•
+Prato Não Encontrado (Status 404 Not Found):
+
+
+
+5. Remover Prato
+
+DELETE /pratos/:id
+
+•
+Descrição: Remove um prato do sistema pelo seu ID.
+
+•
+Método: DELETE
+
+•
+URL: http://localhost:3000/pratos/1 (Substitua 1 pelo ID do prato a ser removido)
+
+•
+Headers:
+
+•
+Authorization: Bearer <SEU_TOKEN_JWT>
+
+
+
+•
+Resposta Esperada (Status 200 OK):
+
+•
+Prato Não Encontrado (Status 404 Not Found):
+
+
+
+6. Buscar Pratos por Nome ou Categoria
+
+GET /pratos/search
+
+•
+Descrição: Busca pratos por nome ou categoria. Pode ser usado com um ou ambos os parâmetros.
+
+•
+Método: GET
+
+•
+URL:
+
+•
+Buscar por nome: http://localhost:3000/pratos/search?nome=pizza
+
+•
+Buscar por categoria: http://localhost:3000/pratos/search?categoria=sobremesa
+
+•
+Buscar por nome e categoria: http://localhost:3000/pratos/search?nome=bolo&categoria=sobremesa
+
+
+
+•
+Headers: Nenhum necessário.
+
+•
+Resposta Esperada (Status 200 OK):
+
+•
+Se nenhum prato for encontrado, retornará um array vazio: [].
+
+
+
+
+
+
+Feito  por PedroCResende 🚀
 

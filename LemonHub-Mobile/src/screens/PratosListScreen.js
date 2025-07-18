@@ -86,9 +86,9 @@ export default function PratosListScreen({ navigation, route, setIsAuthenticated
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: {
-        backgroundColor: '#212121', // Fundo escuro para o cabeçalho
+        backgroundColor: '#212121', 
       },
-      headerTintColor: '#FDD835', // Cor do texto e ícones do cabeçalho
+      headerTintColor: '#FDD835', 
       headerRight: () => (
         <View style={styles.headerButtons}>
           <TouchableOpacity
@@ -139,7 +139,7 @@ export default function PratosListScreen({ navigation, route, setIsAuthenticated
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#212121', // Fundo escuro
+    backgroundColor: '#212121', 
   },
   centerContainer: {
     flex: 1,
@@ -165,12 +165,12 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   headerButtonText: {
-    color: '#FDD835', // Amarelo Limão para texto do cabeçalho
+    color: '#FDD835', 
     fontWeight: 'bold',
     fontSize: 18,
   },
   pratoItem: {
-    backgroundColor: '#3A3A39', // Fundo branco para os itens da lista
+    backgroundColor: '#3A3A39', 
     margin: 10,
     padding: 15,
     borderRadius: 8,
@@ -187,17 +187,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
-    color: '#FDD835', // Texto escuro
+    color: '#FDD835', 
   },
   pratoPreco: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#8BC34A', // Verde Folha para preço
+    color: '#8BC34A', 
     marginBottom: 5,
   },
   pratoCategoria: {
     fontSize: 12,
-    color: '#FDD835', // Cinza para categoria
+    color: '#FDD835', 
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 4,

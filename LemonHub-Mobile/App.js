@@ -30,7 +30,7 @@ export default function App() {
   }, []);
 
   if (isLoading) {
-    // Você pode colocar uma tela de loading ou splash aqui
+    
     return null;
   }
 
